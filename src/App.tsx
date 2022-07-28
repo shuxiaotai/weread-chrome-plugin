@@ -7,8 +7,13 @@ import styles from "./App.module.css";
 
 const USER_VID = "wr_vid";
 
+interface ICookies {
+  name: string
+  value: string
+}
+
 function App() {
-  const [cookies, setCookies] = useState<any[]>([]);
+  const [cookies, setCookies] = useState<ICookies[]>([]);
   const getUserApi = (userVid: string) => {
     return `${baseWebUrl}/web/user?userVid=${userVid}`;
   };
@@ -16,17 +21,18 @@ function App() {
     manual: true,
   }); // 用户信息
 
-  const findUserVidInCookie = (cookies: any[]) => {
+  const findUserVidInCookie = (cookies: ICookies[]) => {
     const target = cookies.find((item) => item.name === USER_VID);
     return target?.value;
   };
 
+  // 指定域名下的cookie
   const getCookie = () => {
     chrome.cookies.getAll(
       {
         domain: cookiesDomain,
       },
-      function (cookies: any[]) {
+      function (cookies) {
         setCookies(cookies);
         const result = findUserVidInCookie(cookies);
         if (result) {
@@ -39,14 +45,15 @@ function App() {
     getCookie();
   }, []);
 
+  // 前往登录
   const handleOpenNewTab = () => {
     chrome.tabs.create({ url: baseWebUrl });
   };
 
   const handleFullScreen = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      var tab = tabs[0] as any;
-      chrome.tabs.sendMessage(tab.id, { fullScreen: true });
+      const tab = tabs[0];
+      chrome.tabs.sendMessage(tab.id!, { fullScreen: true });
     });
   };
 

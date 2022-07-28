@@ -1,18 +1,29 @@
 import React, { useEffect, useRef } from "react";
-import * as echarts from "echarts";
+import { init } from "echarts";
 import { useRequest } from "ahooks";
+import type { ECharts } from 'echarts'
 
 import { baseApiUrl } from "../../src/constant";
 import styles from "./index.module.css";
 
+interface IMonthTimeItem {
+  monthTotalReadTime: number;
+}
+
+interface IDetailData {
+  monthTimeSummary: IMonthTimeItem[];
+}
+
 const Index = (): JSX.Element => {
-  const echartsDiv = useRef<any>(null);
+  const echartsDiv = useRef<ECharts | null>(null);
   const { data: detailData } = useRequest(`${baseApiUrl}/readdetail`);
 
-  const renderOption = (detailData: any) => {
+  const renderOption = (detailData: IDetailData) => {
     const data = detailData.monthTimeSummary
       .reverse()
-      .map((item: any) => (item.monthTotalReadTime / 3600).toFixed(1));
+      .map((item: IMonthTimeItem) =>
+        (item.monthTotalReadTime / 3600).toFixed(1)
+      );
     return {
       title: {
         text: "读书时长",
@@ -64,15 +75,18 @@ const Index = (): JSX.Element => {
   };
 
   useEffect(() => {
-    echartsDiv.current = echarts.init(document.getElementById("month-data") as HTMLElement);
+    echartsDiv.current = init(
+      document.getElementById("month-data") as HTMLDivElement
+    );
   }, []);
 
   useEffect(() => {
     if (detailData) {
-      echartsDiv.current.setOption(renderOption(detailData));
+      echartsDiv.current?.setOption(renderOption(detailData));
     }
   }, [detailData]);
 
+  // 渲染时间图表
   return <div id="month-data" className={styles["month-data"]}></div>;
 };
 
