@@ -4,7 +4,7 @@
 </div>
 
 <h2 align="center">使用</h2>
-通过`yarn build` 命令将打包后的文件输出到`dist`文件夹中，在谷歌`chrome://extensions/`界面中点击`加载已解压的扩展程序`进行引入
+通过`yarn build` 命令将打包后的文件输出到`weread/dist`文件夹中，在谷歌`chrome://extensions/`界面中点击`加载已解压的扩展程序`将weread目录进行引入
 
 
 <h2 align="center">功能列表</h2>
@@ -15,4 +15,6 @@
 4. 👏 在书籍阅读页可以全屏阅读
 
 <h2 align="center">截图展示</h2>
+
+<img src="./imgs/2021.png" width=1000/>
 
