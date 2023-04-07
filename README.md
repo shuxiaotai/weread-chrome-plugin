@@ -4,8 +4,12 @@
 </div>
 
 <h2 align="center">使用</h2>
-通过`yarn build` 命令将打包后的文件输出到`weread/dist`文件夹中，在谷歌`chrome://extensions/`界面中点击`加载已解压的扩展程序`将weread目录进行引入
 
+1. 下载 [weread.zip](./weread.zip)。下载好后进行解压
+
+2. 进入Chrome，在地址栏输入 `chrome://extensions/` 后回车，进入扩展管理页面。
+
+3. 进入页面后，先打开 `开发者模式`，再点击 `加载已解压的扩展程序`，找到前面解压得到的文件夹 `weread`， 点击 `选择` 。
 
 <h2 align="center">功能列表</h2>
 
@@ -16,5 +20,5 @@
 
 <h2 align="center">截图展示</h2>
 
-<img src="./imgs/2021.png" width=1000/>
+<img src="./imgs/2023.png" width=1000/>
 

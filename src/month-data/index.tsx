@@ -7,22 +7,21 @@ import { baseApiUrl } from "../../src/constant";
 import styles from "./index.module.css";
 
 interface IMonthTimeItem {
-  monthTotalReadTime: number;
+  [props: string]: number;
 }
 
 interface IDetailData {
-  monthTimeSummary: IMonthTimeItem[];
+  readTimes: IMonthTimeItem;
 }
 
 const Index = (): JSX.Element => {
   const echartsDiv = useRef<ECharts | null>(null);
-  const { data: detailData } = useRequest(`${baseApiUrl}/readdetail`);
+  const { data: detailData } = useRequest(`${baseApiUrl}/readdata/detail?baseTime=0&mode=anually`);
 
   const renderOption = (detailData: IDetailData) => {
-    const data = detailData.monthTimeSummary
-      .reverse()
-      .map((item: IMonthTimeItem) =>
-        (item.monthTotalReadTime / 3600).toFixed(1)
+    const data = Object.values(detailData.readTimes)
+      .map((item) =>
+        (item / 3600).toFixed(1)
       );
     return {
       title: {
